@@ -1,0 +1,11 @@
+<div class="flex items-center justify-center w-full">
+    <div class="layoutapp" [ngStyle]="{'width.px': appData.width}">
+        <app-navbar></app-navbar>
+
+        <router-outlet></router-outlet>
+        <ng-container *ngIf="!appData.isFullPageValue">
+            <ngx-scroll-to-top [rightPosition]="appData.isMobile ? '10px' : '49%'" [bottomPosition]="'10px'"></ngx-scroll-to-top>
+            <app-copyright></app-copyright>
+        </ng-container>
+    </div>
+</div>

@@ -1,0 +1,111 @@
+<div class="themes">
+  <div style="height: 64px"> </div>
+  <section class="p-4">
+    <ng-container *ngIf="selectedMenu == ''">
+      <app-menu [selectedMenu]="selectedMenu" (selectedMenuChanges)="changeMenu($event)"></app-menu>
+    </ng-container>
+
+    <ng-container *ngIf="selectedMenu == 'surahdetail'">
+      <app-suratdetail [play]="play" [surahData]="surahData" [surahDataNext]="surahDataNext"
+        [surahDataPrev]="surahDataPrev" [selectedMenu]="selectedMenu" (selectedMenuChanges)="changeMenu($event)"
+        (bottomOpenChanges)="bottomOpenComp($event)" (suratChanges)="surahDetail($event)"
+        (playChanges)="playComp($event)"></app-suratdetail>
+    </ng-container>
+
+    <ng-container *ngIf="selectedMenu == 'surah'">
+      <app-surat [selectedMenu]="selectedMenu" (selectedMenuChanges)="changeMenu($event)"
+        (bottomOpenChanges)="bottomOpenComp($event)" (suratChanges)="surahDetail($event)"></app-surat>
+    </ng-container>
+
+    <ng-container *ngIf="selectedMenu == 'jadwalsholat'">
+      <app-jadwalsholat [selectedMenu]="selectedMenu" (selectedMenuChanges)="changeMenu($event)"
+        (bottomOpenChanges)="bottomOpenComp($event)"></app-jadwalsholat>
+    </ng-container>
+
+    <ng-container *ngIf="selectedMenu == 'tentang'">
+      <app-about [selectedMenu]="selectedMenu" (selectedMenuChanges)="changeMenu($event)"
+        (bottomOpenChanges)="bottomOpenComp($event)"></app-about>
+    </ng-container>
+
+    <ng-container *ngIf="selectedMenu == 'juzamma'">
+      <app-juzamma [selectedMenu]="selectedMenu" (selectedMenuChanges)="changeMenu($event)"
+        (bottomOpenChanges)="bottomOpenComp($event)"></app-juzamma>
+    </ng-container>
+
+    <ng-container *ngIf="selectedMenu == 'wirid'">
+      <app-wirid [selectedMenu]="selectedMenu" (selectedMenuChanges)="changeMenu($event)"
+        (bottomOpenChanges)="bottomOpenComp($event)"></app-wirid>
+    </ng-container>
+
+    <ng-container *ngIf="selectedMenu == 'ayatkursi'">
+      <app-ayatkursi [selectedMenu]="selectedMenu" (selectedMenuChanges)="changeMenu($event)"
+        (bottomOpenChanges)="bottomOpenComp($event)"></app-ayatkursi>
+    </ng-container>
+
+    <ng-container *ngIf="selectedMenu == 'asmaul'">
+      <app-asmaulhusna [selectedMenu]="selectedMenu" (selectedMenuChanges)="changeMenu($event)"
+        (bottomOpenChanges)="bottomOpenComp($event)"></app-asmaulhusna>
+    </ng-container>
+
+    <ng-container *ngIf="selectedMenu == 'doa'">
+      <app-doa [selectedMenu]="selectedMenu" (selectedMenuChanges)="changeMenu($event)"
+        (bottomOpenChanges)="bottomOpenComp($event)"></app-doa>
+    </ng-container>
+
+    <ng-container *ngIf="selectedMenu == 'tahlil'">
+      <app-tahlil [selectedMenu]="selectedMenu" (selectedMenuChanges)="changeMenu($event)"
+        (bottomOpenChanges)="bottomOpenComp($event)"></app-tahlil>
+    </ng-container>
+  </section>
+
+  <ng-container *ngIf="bottom || play">
+    <div class="bottominfo" [ngStyle]="{'width.px': appData.width, 'z-index': 5}">
+      <div class="bottominfotitle flex items-center justify-between">
+        <div class="flex items-center gap-2" *ngIf="play">
+          <div class="playrecord"></div>
+          <div class="font-bold">{{ bottomTitle }}</div>
+        </div>
+        <div class="flex items-center gap-2" *ngIf="!play">
+          <div>💠</div>
+          <div class="font-bold">{{ bottomTitle }}</div>
+        </div>
+        <div class="iconaction flex items-center justify-center pointer" (click)="play ? stopAudio() : closeBottom()">
+          <i class="material-icons">
+            close
+          </i>
+        </div>
+      </div>
+      <div class="bottomcontent p-4 flex flex-col gap-4">
+        <ng-container *ngIf="play">
+          <div class="flex items-center justify-between">
+            <div>
+              {{ start }}
+            </div>
+            <div>
+              {{ end }}
+            </div>
+          </div>
+          <div class="mt-2 w-full">
+            <mat-progress-bar mode="determinate" [value]="(startDuration / duration) * 100"></mat-progress-bar>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!play">
+          <div class="bottomterjemahan text-xs" *ngIf="bottomTerjemahan">
+            <div class="flex items-start gap-2 mb-2">
+              <div class="font-bold">🔸</div>
+              <div>Terjemahan:</div>
+            </div>
+            {{ bottomTerjemahan }}
+          </div>
+          <div class="bottomterjemahan text-xs" *ngIf="bottomTafsir">
+            <div class="flex items-start gap-2 mb-2">
+              <div class="font-bold">🔸</div>
+              <div>Tafsir:</div>
+            </div>
+            {{ bottomTafsir }}
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</div>

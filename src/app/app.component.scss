@@ -1,0 +1,13 @@
+app-muslimlite {
+    .layout {
+        max-width: 100vw !important;
+        width: 100vw !important;
+        overflow-x: hidden !important;
+    }
+    .layoutapp {
+        max-width: 480px;
+        min-height: 100vh;
+        border: 1px solid #eee;
+        background: #fff;
+    }
+}

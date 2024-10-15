@@ -1,0 +1,17 @@
+<div class="fixed flex items-center justify-between w-full p-4 navbarapp bg-white" [ngStyle]="{'width.px': appData.width, 'z-index': 5}"> 
+    <div class="font-bold flex items-center justify-start text-2xl gap-2">
+        <img src="assets/logo.png" style="height: 25px"> Muslim Lite 
+    </div>
+
+    <div class="action-button" *ngIf="!isInstalled">
+        <button
+            mat-raised-button
+            color="primary"
+            (click)="install()"
+        >
+        <div class="flex items-center gap-2">
+            <i class="material-icons">download</i> {{ 'Install' }}
+        </div>
+    </button>
+    </div>
+</div> 

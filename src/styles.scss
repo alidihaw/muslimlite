@@ -1,0 +1,30 @@
+@use '@angular/material' as mat;
+@use './styles/m3-theme';
+
+@include mat.core();
+
+html {
+  // Apply the light theme by default
+  @include mat.core-theme(m3-theme.$light-theme);
+  @include mat.button-theme(m3-theme.$light-theme);
+}
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import 'https://fonts.googleapis.com/css?family=Nunito';
+
+@import 'styles/modules.scss';
+@import 'styles/theme.scss';
+
+html,
+body {
+    min-height: 100vh;
+    max-width: 100vw !important;
+    width: 100vw !important;
+    overflow-x: hidden !important;
+    font-family: 'Nunito', sans-serif;
+    background-color: #eee;
+
+    color: #1d3c5e;
+}

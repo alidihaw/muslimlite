@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /login/
+Disallow: /assets/
+
+Sitemap: https://muslimlite.id/sitemap.xml

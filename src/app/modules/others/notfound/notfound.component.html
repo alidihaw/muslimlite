@@ -1,0 +1,23 @@
+<div class="flex items-center justify-center themes themes mt-8">
+    <div class="space-section">
+        <div class="notfound text-center">
+            <img ixImg loading="lazy" src="assets/404.svg" alt="notfound" />
+
+            <div class="text-2xl font-bold mt-10">Oops!</div>
+
+            <div class="text-md mt-6">We're sorry,</div>
+
+            <div class="text-md mt-2">The page you were looking for doesn't exist anymore.</div>
+
+            <div class="mt-4">
+                <button
+                    mat-raised-button
+                    color="primary"
+                    (click)="helperUtils.goToURL('/')"
+                >
+                    {{ 'Back to Home' }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

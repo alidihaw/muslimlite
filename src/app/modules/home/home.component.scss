@@ -1,0 +1,141 @@
+app-home {}
+
+.card-menu {
+  padding: 15px 10px !important;
+  background-color: #f5f5f5;
+}
+
+.card-menu:hover {
+  background-color: #eeeeee;
+}
+
+.interkom-faq-main-input {
+  margin-top: 10px;
+
+  input {
+    outline: none;
+  }
+
+  input[type='search'] {
+    -webkit-appearance: textfield;
+    -webkit-box-sizing: content-box;
+    font-family: inherit;
+    font-size: 100%;
+  }
+
+  input::-webkit-search-decoration,
+  input::-webkit-search-cancel-button {
+    display: none;
+  }
+
+  input[type='search'] {
+    padding: 12px 32px 12px 42px;
+    width: 100%;
+    color: black;
+    background: #fff url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 9px center;
+    border: solid 1px #ccc;
+
+    -webkit-border-radius: 10em;
+    -moz-border-radius: 10em;
+    border-radius: 10em;
+
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    transition: all 0.5s;
+  }
+}
+
+.number {
+  padding: 2px 4px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #40996b;
+  background-color: #ddffed;
+}
+
+.card-asmaul {
+  padding: 10px !important;
+  background-color: #f5f5f5;
+}
+
+.breadcrumb-item {
+  background-color: #f5f5f5;
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+
+.selected {
+  background-color: #bcbcbc;
+}
+
+:host ::ng-deep mat-progress-bar {
+  height: 20px;
+  border-radius: 8px;
+}
+
+:host ::ng-deep mat-progress-bar .mdc-linear-progress__bar-inner {
+  border-top-width: 20px;
+  border-radius: 8px;
+}
+
+.playrecord {
+  animation: ping 1s cubic-bezier(0, 0, .2, 1) infinite;
+  background-color: #a83131;
+  height: 14px;
+  width: 14px;
+  border-radius: 100%;
+}
+
+.bottominfo {
+  position: fixed;
+  z-index: 2;
+  bottom: 0;
+  border: 1px solid #eee;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+
+  .bottominfotitle {
+    padding: 10px;
+    background-color: #f5f5f5;
+  }
+
+  .bottomcontent {
+    background-color: white;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+}
+
+.iconaction {
+  background-color: white;
+  border-radius: 8px;
+  padding: 8px;
+  height: 40px;
+  width: 40px;
+}
+
+.numbertracking {
+  border: 1px solid #e5e5e5;
+  border-radius: 100%;
+  padding: 8px;
+  height: 30px;
+  width: 30px;
+}
+
+.text-italic {
+  font-style: italic !important;
+}
+
+.makkiyah {
+  padding: 2px 4px;
+  border-radius: 6px;
+  color: #ba6b2a;
+  background-color: #f7dcc6;
+}
+
+.madaniyah {
+  padding: 2px 4px;
+  border-radius: 6px;
+  color: #40996b;
+  background-color: #ddffed;
+}

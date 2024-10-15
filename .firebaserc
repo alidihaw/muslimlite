@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "muslimliteid"
+  },
+  "targets": {
+    "muslimliteid": {
+      "hosting": {
+        "muslimliteid": [
+          "muslimliteid"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
