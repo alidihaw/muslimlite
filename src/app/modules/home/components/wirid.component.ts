@@ -27,7 +27,7 @@ import { WIRID } from "@utils/wirid";
       </div>
       
       <div class="flex flex-col items center gap-4">
-        <ng-container *ngFor="let item of wirid; let i = index;">
+        @for (item of wirid; track item; let i = $index) {
           <div class="card-standard card-asmaul">
             <div class="flex flex-col items-center w-full gap-4">
               <div class="font-bold text-2xl text-right flex w-full justify-end items-center">
@@ -38,7 +38,7 @@ import { WIRID } from "@utils/wirid";
               </div>
             </div>
           </div>
-        </ng-container>
+        }
       </div>
   `,
   styles: [],

@@ -27,7 +27,7 @@ import { ASMAUL_HUSNA } from "@utils/asmaulhusna";
       </div>
       
       <div class="flex flex-col items center gap-4">
-        <ng-container *ngFor="let item of asmaulHusna; let i = index;">
+        @for (item of asmaulHusna; track item; let i = $index) {
           <div class="card-standard card-asmaul">
             <div class="flex flex-col gap-4 items-start w-full">
               <div>
@@ -51,7 +51,7 @@ import { ASMAUL_HUSNA } from "@utils/asmaulhusna";
               </div>
             </div>
           </div>
-        </ng-container>
+        }
       </div>
   `,
   styles: [],

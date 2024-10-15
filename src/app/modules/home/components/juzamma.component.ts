@@ -35,8 +35,7 @@ import { FormsModule } from "@angular/forms";
       </div>
 
       <div class="flex flex-col items center gap-4">
-        <ng-container
-          *ngFor="let item of surah | keyvalue | orderBy: ['value.index'] | slice: 77: 114 | filterBy: ['value.latin', 'value.translation', 'value.arabic']: search; let i = index;">
+          @for (item of surah | keyvalue | orderBy: ['value.index'] | slice: 77: 114 | filterBy: ['value.latin', 'value.translation', 'value.arabic']: search; track item; let i = $index) {
           <div class="card-standard card-asmaul">
             <div class="flex flex-col gap-4 items-start w-full">
               <div class="flex justify-between items-center w-full">
@@ -63,7 +62,7 @@ import { FormsModule } from "@angular/forms";
               </div>
             </div>
           </div>
-        </ng-container>
+          }
       </div>
   `,
   styles: [],

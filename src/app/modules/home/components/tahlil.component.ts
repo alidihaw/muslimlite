@@ -27,7 +27,7 @@ import { tahlilData } from "@utils/tahlil";
       </div>
 
       <div class="flex flex-col items center gap-4">
-        <ng-container *ngFor="let item of tahlil; let i = index;">
+        @for (item of tahlil; track item; let i = $index) {
           <div class="card-standard card-asmaul">
             <div class="flex flex-col w-full">
               <div>
@@ -53,7 +53,7 @@ import { tahlilData } from "@utils/tahlil";
               </div>
             </div>
           </div>
-        </ng-container>
+        }
       </div>
   `,
   styles: [],

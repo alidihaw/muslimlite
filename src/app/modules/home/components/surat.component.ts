@@ -35,36 +35,36 @@ import { FormsModule } from "@angular/forms";
       </div>
 
       <div class="flex flex-col items center gap-4">
-        <ng-container
-          *ngFor="let item of surah | keyvalue | orderBy: ['value.index'] | filterBy: ['value.latin', 'value.translation', 'value.arabic']: search; let i = index;">
-          <div class="card-standard card-asmaul pointer"
-            (click)="selectedMenu = 'surahdetail'; selectedMenuChanges.next('surahdetail'); suratChanges.next(item.value.index);">
-            <div class="flex flex-col gap-4 items-start w-full">
-              <div class="flex justify-between items-center w-full">
-                <div class="w-1/2">
-                  <div class="flex items-center gap-2">
-                    <div class="font-bold">{{ item.value.latin }}</div>
+       
+          @for (item of surah | keyvalue | orderBy: ['value.index'] | filterBy: ['value.latin', 'value.translation', 'value.arabic']: search; track item; let i = $index) {
+            <div class="card-standard card-asmaul pointer"
+              (click)="selectedMenu = 'surahdetail'; selectedMenuChanges.next('surahdetail'); suratChanges.next(item.value.index);">
+              <div class="flex flex-col gap-4 items-start w-full">
+                <div class="flex justify-between items-center w-full">
+                  <div class="w-1/2">
+                    <div class="flex items-center gap-2">
+                      <div class="font-bold">{{ item.value.latin }}</div>
+                    </div>
+                    <div class="text-gray text-xs flex items-center gap-2">
+                      {{ item.value.translation }} • {{ item.value.ayah_count }} Ayat
+                    </div>
                   </div>
-                  <div class="text-gray text-xs flex items-center gap-2">
-                    {{ item.value.translation }} • {{ item.value.ayah_count }} Ayat
+                  <div class="font-bold text-2xl text-right flex w-1/2 justify-end items-center">
+                    {{ item.value.arabic }}
                   </div>
                 </div>
-                <div class="font-bold text-2xl text-right flex w-1/2 justify-end items-center">
-                  {{ item.value.arabic }}
-                </div>
-              </div>
-              <div class="flex items-center gap-2">
-                <div class="numbertracking flex items-center justify-center text-xs text-gray">
-                  {{ item.value.index }}
-                </div>
-                <div class="text-xs" [class.makkiyah]="MakkiyahMadaniyah[item.value.index] === 1"
-                  [class.madaniyah]="MakkiyahMadaniyah[item.value.index] === 2">
-                  {{ MakkiyahMadaniyah[item.value.index] === 1 ? 'Makkiyah' : 'Madaniyah' }}
+                <div class="flex items-center gap-2">
+                  <div class="numbertracking flex items-center justify-center text-xs text-gray">
+                    {{ item.value.index }}
+                  </div>
+                  <div class="text-xs" [class.makkiyah]="MakkiyahMadaniyah[item.value.index] === 1"
+                    [class.madaniyah]="MakkiyahMadaniyah[item.value.index] === 2">
+                    {{ MakkiyahMadaniyah[item.value.index] === 1 ? 'Makkiyah' : 'Madaniyah' }}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </ng-container>
+          }
       </div>
   `,
   styles: [],

@@ -27,7 +27,7 @@ import { dailyDoa } from "@utils/doa";
       </div>
       
       <div class="flex flex-col items center gap-4">
-        <ng-container *ngFor="let item of doa; let i = index;">
+        @for (item of doa; track item; let i = $index) {
           <div class="card-standard card-asmaul">
             <div class="flex flex-col w-full">
               <div>
@@ -56,7 +56,7 @@ import { dailyDoa } from "@utils/doa";
               </div>
             </div>
           </div>
-        </ng-container>
+        }
       </div>
   `,
   styles: [],
