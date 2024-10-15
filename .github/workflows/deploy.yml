@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-node@master
         with:
           node-version: '18.x'
-      - run: npm run install && npm run build
+      - run: npm install && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
