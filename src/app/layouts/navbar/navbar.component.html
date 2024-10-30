@@ -1,7 +1,7 @@
 <div class="fixed flex items-center justify-between w-full p-4 navbarapp bg-white"
   [ngStyle]="{'width.px': appData.width, 'z-index': 5}">
   <div class="font-bold flex items-center justify-start text-2xl gap-2">
-    <img src="assets/logo.png" style="height: 25px"> Muslim Lite
+    <img [ngSrc]="'assets/logo.webp'" height="25" width="25" alt="Logo" priority> Muslim Lite
   </div>
 
   @if (isInstalled) {

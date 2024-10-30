@@ -1,12 +1,16 @@
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Injectable, isDevMode } from '@angular/core';
+import { Inject, Injectable, isDevMode, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root',
 })
 export class HelperUtils {
-    constructor(private router: Router) {}
+    constructor(private router: Router,
+        @Inject(PLATFORM_ID) private platformId: Object,
+        @Inject(DOCUMENT) private document: Document
+    ) {}
 
     getAge(date: Date) {
         const now = new Date();
@@ -84,8 +88,10 @@ export class HelperUtils {
     }
 
     scrollToElement(id: string): void {
-        const element = document.getElementById(id);
-        element?.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+        if (isPlatformBrowser(this.platformId)) {
+            const element = this.document.getElementById(id);
+            element?.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+        }
     }
 
     scrollToTop() {
@@ -97,11 +103,15 @@ export class HelperUtils {
     }
 
     goToLinkOnly(link: string) {
-        window.open(link, '_blank');
+        if (isPlatformBrowser(this.platformId)) {
+            window.open(link, '_blank');
+        }
     }
 
     goToLink(link: string) {
-        window.open(link, '_blank');
+        if (isPlatformBrowser(this.platformId)) {
+            window.open(link, '_blank');
+        }
     }
 
     getInitials = (name: string) => {
@@ -133,17 +143,19 @@ export class HelperUtils {
     };
 
     copyMessage(val: string) {
-        const selBox = document.createElement('textarea');
-        selBox.style.position = 'fixed';
-        selBox.style.left = '0';
-        selBox.style.top = '0';
-        selBox.style.opacity = '0';
-        selBox.value = val;
-        document.body.appendChild(selBox);
-        selBox.focus();
-        selBox.select();
-        document.execCommand('copy');
-        document.body.removeChild(selBox);
+        if (isPlatformBrowser(this.platformId)) {
+            const selBox = this.document.createElement('textarea');
+            selBox.style.position = 'fixed';
+            selBox.style.left = '0';
+            selBox.style.top = '0';
+            selBox.style.opacity = '0';
+            selBox.value = val;
+            this.document.body.appendChild(selBox);
+            selBox.focus();
+            selBox.select();
+            this.document.execCommand('copy');
+            this.document.body.removeChild(selBox);
+        }
     }
 
     generateRandomString = (length = 0, randomString = ''): string => {

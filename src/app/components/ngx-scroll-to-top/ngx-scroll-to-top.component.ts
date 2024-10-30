@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, HostListener, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, HostListener, Inject, Input, OnInit, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
+import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 @Component({
     selector: 'ngx-scroll-to-top',
@@ -18,14 +18,19 @@ export class NgxScrollToTopComponent implements OnInit {
 
     @HostListener('window:scroll', ['$event'])
     onWindowScroll() {
-        const me = this;
-        if (window.pageYOffset > 100) {
-            me.isShow = true;
-        } else {
-            me.isShow = false;
+        if (isPlatformBrowser(this.platformId)) {
+            const me = this;
+            if (window.pageYOffset > 100) {
+                me.isShow = true;
+            } else {
+                me.isShow = false;
+            }
         }
     }
-    constructor() {}
+    constructor(
+        @Inject(PLATFORM_ID) private platformId: Object,
+        @Inject(DOCUMENT) private document: Document
+    ) {}
 
     ngOnInit(): void {}
 

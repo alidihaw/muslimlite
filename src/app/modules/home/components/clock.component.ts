@@ -1,11 +1,11 @@
-import { Component, ViewChild, Input, ElementRef, OnDestroy, OnInit, AfterViewInit } from "@angular/core";
+import { Component, ViewChild, Input, ElementRef, OnDestroy, OnInit, AfterViewInit, PLATFORM_ID, Inject } from "@angular/core";
 import { ChangeDetectionStrategy, NgZone } from "@angular/core";
 
 import { tap } from "rxjs/operators";
 
 import { TDate } from "@utils/TDate";
 import { Subscription, timer } from "rxjs";
-import { CommonModule } from "@angular/common";
+import { CommonModule, DOCUMENT, isPlatformBrowser } from "@angular/common";
 
 @Component({
   selector: "cs-canvas-clock",
@@ -22,7 +22,9 @@ export class CanvasClockComponent implements OnInit, OnDestroy, AfterViewInit {
   canvasContext!: any;
   subscription!: Subscription;
 
-  constructor(private ngZone: NgZone) {}
+  constructor(private ngZone: NgZone,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(DOCUMENT) private document: Document) {}
 
   ngOnInit() {}
   ngAfterViewInit() {
@@ -38,7 +40,9 @@ export class CanvasClockComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (isPlatformBrowser(this.platformId)) {
+      this.subscription.unsubscribe();
+    }
   }
 
   draw(innerRadius: number) {

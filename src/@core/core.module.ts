@@ -2,15 +2,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { LOCALE_ID, ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { SplashScreenModule } from './splash-screen/splash-screen.module';
-
 @NgModule({
     imports: [
         HttpClientModule,
         ReactiveFormsModule,
         FormsModule,
-
-        SplashScreenModule,
     ],
     exports: [ReactiveFormsModule, FormsModule],
 })

@@ -27,6 +27,16 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/manifest.webmanifest",
+              {
+                "glob": "robots.txt",
+                "input": "src/assets",
+                "output": "/"
+              },
+              {
+                "glob": "sitemap.xml",
+                "input": "src/assets",
+                "output": "/"
+              },
               "src/assets"
             ],
             "styles": [
@@ -34,6 +44,11 @@
             ],
             "scripts": [
             ],
+            "server": "src/main.server.ts",
+            "prerender": true,
+            "ssr": {
+              "entry": "server.ts"
+            },
             "serviceWorker": "src/ngsw-config.json"
           },
           "configurations": {

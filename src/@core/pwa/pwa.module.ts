@@ -1,4 +1,5 @@
-import { ApplicationRef, isDevMode, ModuleWithProviders, NgModule } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { ApplicationRef, Inject, isDevMode, ModuleWithProviders, NgModule, PLATFORM_ID } from '@angular/core';
 import { ServiceWorkerModule, SwUpdate } from '@angular/service-worker';
 import { concat, first, interval } from 'rxjs';
 
@@ -12,7 +13,10 @@ import { concat, first, interval } from 'rxjs';
     exports: [],
 })
 export class PWAModule {
-    constructor(private swUpdate: SwUpdate, appRef: ApplicationRef) {
+    constructor(private swUpdate: SwUpdate, appRef: ApplicationRef, 
+        @Inject(PLATFORM_ID) private platformId: Object,
+        @Inject(DOCUMENT) private document: Document
+    ) {
         if (this.swUpdate.isEnabled) {
             const appIsStable$ = appRef.isStable.pipe(first((isStable) => isStable === true));
             const everySixHours$ = interval(6 * 60 * 60 * 1000);
@@ -24,7 +28,9 @@ export class PWAModule {
                     console.log(updateFound ? 'A new version is available.' : 'Already on the latest version.');
                     if (updateFound) {
                         await this.swUpdate.activateUpdate();
-                        document.location.reload();
+                        if (isPlatformBrowser(this.platformId)) {
+                            this.document.location.reload();
+                        }
                     }
                 } catch (err) {
                     console.error('Failed to check for updates:', err);
@@ -51,7 +57,7 @@ export class PWAModule {
                     console.log(`Current app version: ${evt.currentVersion.hash}`);
                     console.log(`New app version ready for use: ${evt.latestVersion.hash}`);
                     await this.swUpdate.activateUpdate();
-                    document.location.reload();
+                    this.document.location.reload();
                     break;
                 case 'VERSION_INSTALLATION_FAILED':
                     console.log(`Failed to install app version '${evt.version.hash}': ${evt.error}`);

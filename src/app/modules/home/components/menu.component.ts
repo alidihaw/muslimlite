@@ -27,7 +27,7 @@ import { CommonModule } from "@angular/common";
       </div>
       <div class="flex items center gap-4">
         <div class="card-standard w-1/2 text-left items-center justify-start card-menu pointer"
-          (click)="selectedMenu = 'asmaul'; selectedMenuChanges.next('asmaul');">
+          (click)="selectedMenu = 'asmaulhusna'; selectedMenuChanges.next('asmaulhusna');">
           <div class="flex items-center gap-2">
             <div>💯</div>
             <div>Asmaul Husna</div>

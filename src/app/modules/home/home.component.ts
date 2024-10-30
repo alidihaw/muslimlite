@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { AppData } from '@appData';
 import { MakkiyahMadaniyah, surahInfo } from '@utils/surah';
@@ -19,6 +19,8 @@ import { JadwalSholatComponent } from './components/jadwalsholat.component';
 import { JuzammaComponent } from './components/juzamma.component';
 import { SuratComponent } from './components/surat.component';
 import { SuratDetailComponent } from './components/suratdetail.component';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter, Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-home',
@@ -45,7 +47,7 @@ import { SuratDetailComponent } from './components/suratdetail.component';
     ],
     encapsulation: ViewEncapsulation.None,
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
     selectedMenu = '';
 
     surah = surahInfo;
@@ -57,8 +59,118 @@ export class HomeComponent implements OnInit {
     bottomTafsir = '';
     search = '';
 
-    constructor(public appData: AppData, private meta: Meta, private httpClient: HttpClient, private title: Title) {
-        this.setTag();
+    subs!: Subscription;
+    subsDetail!: Subscription;
+    constructor(public appData: AppData, private meta: Meta, private httpClient: HttpClient, private title: Title, private router: Router, private route: ActivatedRoute) {
+        if (this.subs) this.subs?.unsubscribe();
+        this.subs = this.router.events.subscribe((val) => {
+            if (val instanceof NavigationEnd) {
+                this.configMeta();
+            }
+        });
+    }
+
+    configMeta() {
+        if (this.router.url === '/') {
+            this.selectedMenu = '';
+            this.setMeta({
+                title: "Qur'an Online Gratis | muslimlite.id",
+                description: "Bacaan lengkap Al-Qur'an 30 Juz beserta terjemahan dan tafsir dari Kemenag, 💸 gratis sepenuhnya, 💫 tanpa iklan, 📈 tanpa analitik",
+            });  
+        }
+        if (this.router.url === '/tentang') {
+            this.selectedMenu = 'tentang';
+            this.setMeta({
+                title: "Tentang Muslim Lite | Qur'an Online Gratis | muslimlite.id",
+            });  
+        }
+        if (this.router.url === '/tahlil') {
+            this.selectedMenu = 'tahlil';
+            this.setMeta({
+                title: "Tahlil | Qur'an Online Gratis | muslimlite.id",
+            });  
+        }
+        if (this.router.url === '/wirid') {
+            this.selectedMenu = 'wirid';
+            this.setMeta({
+                title: "Wirid | Qur'an Online Gratis | muslimlite.id",
+            });  
+        }
+        if (this.router.url === '/juzamma') {
+            this.selectedMenu = 'juzamma';
+            this.setMeta({
+                title: "Juzamma | Qur'an Online Gratis | muslimlite.id",
+            });  
+        }
+        if (this.router.url === '/ayatkursi') {
+            this.selectedMenu = 'ayatkursi';
+            this.setMeta({
+                title: "Ayat Kursi | Qur'an Online Gratis | muslimlite.id",
+            });  
+        }
+        if (this.router.url === '/doa') {
+            this.selectedMenu = 'doa';
+            this.setMeta({
+                title: "Doa | Qur'an Online Gratis | muslimlite.id",
+            });  
+        }
+        if (this.router.url === '/asmaulhusna') {
+            this.selectedMenu = 'asmaulhusna';
+            this.setMeta({
+                title: "Asmaul Husna | Qur'an Online Gratis | muslimlite.id",
+            });  
+        }
+        if (this.router.url === '/jadwalsholat') {
+            this.selectedMenu = 'jadwalsholat';
+            this.setMeta({
+                title: "Jadwal Sholat | Qur'an Online Gratis | muslimlite.id",
+            });  
+        }
+        if (this.router.url === '/surah') {
+            this.selectedMenu = 'surah';
+            this.setMeta({
+                title: "Semua Surah | Qur'an Online Gratis | muslimlite.id",
+            });  
+        }
+        if (this.router.url.includes('/surahdetail')) {
+            this.selectedMenu = 'surahdetail';
+            let index: any = this.route.snapshot.params["id"];
+            if (index) index = +index;
+            this.surahDataPrev = null;
+            this.surahDataNext = null;
+            this.surahData = this.route.snapshot.data['surahData'][index];
+            this.setMeta({ title: this.surahData.name_latin + " | Qur'an Online Gratis | muslimlite.id", });
+            if (index != 1) {
+                this.httpClient.get('assets/surah/' + (+index - 1) + '.json').subscribe((i: any) => {
+                    this.surahDataPrev = i[+index - 1];
+                })
+            } 
+            if (index != 114) {
+                this.httpClient.get('assets/surah/' + (+index + 1) + '.json').subscribe((i: any) => {
+                    this.surahDataNext = i[+index + 1];
+                })
+            } 
+        }
+    }
+
+    setMeta(metaValue: any) {
+        if (metaValue) {
+            const value = {
+                title: metaValue?.title || "",
+                description: metaValue?.description || "",
+            };
+            if (value?.title) {
+                this.title.setTitle(value.title);
+                this.meta.updateTag({ name: "title", content: value.title });
+                this.meta.updateTag({ property: "og:title", content: value.title });
+                this.meta.updateTag({ property: "twitter:title", content: value.title });
+            }
+            if (value?.description) {
+                this.meta.updateTag({ name: "description", content: value.description });
+                this.meta.updateTag({ property: "og:description", content: value.description });
+                this.meta.updateTag({ property: "twitter:description", content: value.description });
+            }
+        }
     }
 
     bottomOpen(title: string, terjemahan: string, tafsir?: string) {
@@ -123,7 +235,6 @@ export class HomeComponent implements OnInit {
     }
 
     playAudio(surat: any, index: number) {
-        console.log("SURAT", surat, index);
         if (this.playInterval) {
             clearInterval(this.playInterval);
             this.playInterval = null;
@@ -149,8 +260,6 @@ export class HomeComponent implements OnInit {
 
         suratN = ("00" + suratN).slice(-3)
         ayatN = ("00" + ayatN).slice(-3)
-        console.log("suratN", suratN);
-        console.log("ayatN", ayatN);
         let audio = new Audio();
         audio.src = 'https://everyayah.com/data/Abdurrahmaan_As-Sudais_192kbps/'+ suratN + ayatN +'.mp3';
         audio.autoplay = true;
@@ -206,24 +315,10 @@ export class HomeComponent implements OnInit {
         return false;
     }
 
+    surahindex = 0;
     surahDetail(index: any) {
-        console.log("surahDetail", index);
-        this.surahData = null;
-        this.surahDataPrev = null;
-        this.surahDataNext = null;
-        this.httpClient.get('assets/surah/' + +index + '.json').subscribe((i: any) => {
-            this.surahData = i[index];
-        })
-        if (index != 1) {
-            this.httpClient.get('assets/surah/' + (+index - 1) + '.json').subscribe((i: any) => {
-                this.surahDataPrev = i[+index - 1];
-            })
-        } 
-        if (index != 114) {
-            this.httpClient.get('assets/surah/' + (+index + 1) + '.json').subscribe((i: any) => {
-                this.surahDataNext = i[+index + 1];
-            })
-        } 
+        this.surahindex = index;
+        this.router.navigate(['surahdetail' + "/" + index]);
     }
 
     setTag() {
@@ -232,8 +327,14 @@ export class HomeComponent implements OnInit {
     ngOnInit(): void {
     }
 
+    ngOnDestroy() {
+        if (this.subs) this.subs?.unsubscribe();
+        if (this.subsDetail) this.subsDetail?.unsubscribe();
+    }
+
     changeMenu(event: string) {
-        this.selectedMenu = event;
+        // this.selectedMenu = event;
+        this.router.navigate([event]);
         this.play = false; 
         this.stopAudio(); 
         this.bottom = false;

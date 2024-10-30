@@ -169,8 +169,6 @@ export class JadwalSholatComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.location) {
         this.httpClient.get('https://api.aladhan.com/v1/calendar/' + this.now.getFullYear() + '/' + ("0" + (this.now.getMonth() + 1)).slice(-2) +'?method=1&latitude=' + this.location.latitude +'&longitude='  + this.location.longitude).subscribe((i: any) => {
             this.pray = i?.data;
-            console.log("(this.now.getDate())).slice(-2)",  ("0" + (this.now.getDate())).slice(-2));
-            console.log("this.pray", this.pray);
             this.prayToday = i?.data?.filter((a: any) => a?.date?.gregorian?.day === ("0" + (this.now.getDate())).slice(-2))[0];
         });
     }
