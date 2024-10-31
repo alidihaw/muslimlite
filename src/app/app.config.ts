@@ -1,5 +1,5 @@
 import { ApplicationConfig, importProvidersFrom, Provider, provideZoneChangeDetection } from '@angular/core';
-import { InMemoryScrollingFeature, InMemoryScrollingOptions, NoPreloading, PreloadAllModules, provideRouter, withInMemoryScrolling, withPreloading } from '@angular/router';
+import { InMemoryScrollingFeature, InMemoryScrollingOptions, NoPreloading, PreloadAllModules, provideRouter, RouteReuseStrategy, withInMemoryScrolling, withPreloading } from '@angular/router';
 
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -8,6 +8,7 @@ import { CoreModule } from '@core/core.module';
 import { IMAGE_CONFIG, IMAGE_LOADER, ImageLoaderConfig, PRECONNECT_CHECK_BLOCKLIST } from '@angular/common';
 
 import { routes } from './app.routes';
+import { CustomRouteReuseStrategy } from './app.reuse';
 
 const scrollConfig: InMemoryScrollingOptions = {
   scrollPositionRestoration: 'top',
@@ -30,8 +31,17 @@ export const appConfig: ApplicationConfig = {
     provideImageConfig(),
     provideImageLoaded(),
     providePreconnect(),
+    provideReuse(),
   ]
 };
+
+export function provideReuse(): Provider {
+  return {
+      provide: RouteReuseStrategy,
+      useClass: CustomRouteReuseStrategy,
+  };
+}
+
 
 export function provideImageConfig(): Provider {
   return {
